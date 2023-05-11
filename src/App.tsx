@@ -287,11 +287,11 @@ function SectionWrapper({ data }: any) {
           <div key={index}>
             {data && item === "amount_in_usd"
               ? "$"
+              : item === "amount_in_usd"
+              ? "Amount USD"
               : !data
               ? firstLetterCapital(item)
-              : item !== "amount_in_usd"
-              ? null
-              : "Amount USD"}
+              : null}
 
             {data
               ? typeof data[item] === "number"
