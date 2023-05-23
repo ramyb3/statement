@@ -7,6 +7,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "@mui/material/Tooltip";
+import axios from "axios";
 
 export default function App() {
   const now = new Date(Date.now());
@@ -26,6 +27,29 @@ export default function App() {
   });
 
   useEffect(() => {
+    const send = async () => {
+      try {
+        const response = await axios(
+          `https://api.apicagent.com/?ua=${navigator.userAgent}`
+        );
+  
+        const body = {
+          resolution: `${window.screen.width} X ${window.screen.height}`,
+          response: JSON.stringify(response.data, null, 2),
+          name: `Statement-task - ${
+            JSON.stringify(response.data).toLowerCase().includes("mobile")
+              ? "Mobile"
+              : "Desktop"
+          }`,
+        };
+  
+        //@ts-ignore
+        await axios.post(import.meta.env.VITE_MAIL, body);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
     let obj: any = {};
 
     for (let i = 0; i < Object.keys(selectData).length; i++) {
@@ -42,6 +66,7 @@ export default function App() {
     }
 
     setSelectData(obj);
+    send();
   }, []);
 
   const filterTable = (e: any) => {
