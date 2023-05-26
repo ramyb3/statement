@@ -36,11 +36,7 @@ export default function App() {
         const body = {
           resolution: `${window.screen.width} X ${window.screen.height}`,
           response: JSON.stringify(response.data, null, 2),
-          name: `Statement-task - ${
-            JSON.stringify(response.data).toLowerCase().includes("mobile")
-              ? "Mobile"
-              : "Desktop"
-          }`,
+          name: "Statement-task",
         };
   
         //@ts-ignore
